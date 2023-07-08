@@ -22,14 +22,15 @@ html, body {
 	margin: 0 auto;
 	max-width: 80ch + 2ch;
 	height: 100%;
-}
-
-#conversation {
-	height: 80%;
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-end;
-	overflow: scroll;
+}
+
+#conversation {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
 	margin-bottom: 1ch;
 }
 
