@@ -4,7 +4,7 @@
   "description": "1-2 Dungeon is a game made for the GMTK 2023 - Role Reversal game jam",
   "main": "index.html",
   "scripts": {
-    "build": "esbuild src/index.js --bundle --outfile=out/index.js",
+    "build": "esbuild src/index.js --bundle --outfile=out/index.js && cp src/index.html out/index.html",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
