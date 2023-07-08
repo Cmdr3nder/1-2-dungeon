@@ -6,22 +6,23 @@
         <script type="text/javascript" src="./index.js"></script>
     </head>
     <body>
-	    <div id="conversation">
-	    </div>
-	    <div id="prompt-container">
-		    <textarea id="prompt-editor" rows="5" cols="80"></textarea>
-	    </div>
-	    <button id="prompt-submit">Send</button>
-	    <template id="conversation-user-entry">
-		    <div class="user-entry">
-			    <div class="text"></div>
-			    <button class="reuse">⥀</button>
+	    <div id="main">
+		    <div id="conversation">
 		    </div>
-	    </template>
-	    <template id="conversation-bot-entry">
-		    <div class="bot-entry">
-			    <div class="text"></div>
+		    <div id="prompt-container">
+			    <textarea id="prompt-editor"></textarea>
+			    <button id="prompt-submit">Send</button>
 		    </div>
-	    </template>
+		    <template id="conversation-user-entry">
+			    <div class="user-entry">
+				    <div class="text reuse"></div>
+			    </div>
+		    </template>
+		    <template id="conversation-bot-entry">
+			    <div class="bot-entry">
+				    <div class="text"></div>
+			    </div>
+		    </template>
+	    </div>
     </body>
 </html>
