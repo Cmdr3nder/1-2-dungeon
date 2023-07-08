@@ -1,0 +1,19 @@
+html, body {
+	background-color: white;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+}
+
+body {
+	padding: 2ch;
+
+	&.theme-vaporwave {
+		background-color: blue;
+	}
+}
+
+#conversation {
+	max-width: 80ch;
+}
