@@ -28,30 +28,31 @@ html, body {
 }
 
 #conversation {
+	flex: 1 0 min-content;
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-end;
+	margin-bottom: 1ch;
+	overflow-y: auto;
+}
+
+.user-entry,
+.bot-entry {
+	max-width: 80%;
+	padding: 2ch;
+	background-color: var(--em-bg-color);
+	border-radius: 8px;
 	margin-bottom: 1ch;
 }
 
 .user-entry {
 	align-self: flex-end;
-	max-width: 80%;
-	padding: 2ch;
-	background-color: var(--em-bg-color);
 	border: 2px solid var(--user-color);
-	border-radius: 8px;
-	margin-bottom: 1ch;
 }
 
 .bot-entry {
 	align-self: flex-start;
-	max-width: 80%;
-	padding: 2ch;
-	background-color: var(--em-bg-color);
 	border: 2px solid var(--bot-color);
-	border-radius: 8px;
-	margin-bottom: 1ch;
 }
 
 #prompt-submit {
