@@ -5,7 +5,7 @@
   "main": "index.html",
   "scripts": {
     "build": "esbuild src/index.js --bundle --outfile=out/index.js && cp src/index.html out/index.html",
-    "serve": "npx live-server --mount=/:out/",
+    "serve": "cd out && npx live-server",
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "find src -type f | entr npm run build"
   },
@@ -21,6 +21,7 @@
     "live-server": "1.2.2"
   },
   "dependencies": {
+    "compendium-js": "0.0.31",
     "compromise": "14.9.0",
     "markov-chains": "1.0.2"
   }

@@ -4,6 +4,21 @@
         <script type="text/javascript" src="./index.js"></script>
     </head>
     <body>
-	    Hello :wave:
+	    <div id="conversation">
+	    </div>
+	    <div id="prompt-container">
+		    <textarea id="prompt-editor" rows="5" cols="80"></textarea>
+	    </div>
+	    <button id="prompt-submit">Send</button>
+	    <template id="conversation-user-entry">
+		    <div class="user-entry">
+			    <div class="text"></div>
+		    </div>
+	    </template>
+	    <template id="conversation-bot-entry">
+		    <div class="bot-entry">
+			    <div class="text"></div>
+		    </div>
+	    </template>
     </body>
 </html>
