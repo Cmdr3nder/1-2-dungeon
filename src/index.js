@@ -19,11 +19,17 @@ document.addEventListener('DOMContentLoaded', () => {
 		if (prompt_text) { // Prompt with contents
 		   const user_entry = user_entry_template.content.cloneNode(true);
 		   user_entry.querySelector('.text').innerHTML = to_inner_html(prompt_text);
+		   const reuse = user_entry.querySelector('.reuse');
+		   reuse.setAttribute('data-prompt', prompt_text);
+		   reuse.addEventListener('click', () => {
+			   // TODO: We should probably confirm before applying this!
+			   prompt_editor.value = reuse.getAttribute('data-prompt'); 
+		   });
 		   conversation_zone.appendChild(user_entry);
 
 			const analysis = compendium.analyse(prompt_text);
 			const response = respond({prompt_text, analysis, conversation_window, annoyance});
-		   annoyance = response.annoyance;
+		   annoyance = Math.max(response.annoyance, MIN_ANNOYANCE);
 
 		   const bot_entry = bot_entry_template.content.cloneNode(true);
 			bot_entry.querySelector('.text').innerHTML = to_inner_html(response.text);
@@ -44,6 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	prompt_editor.addEventListener('keyup', (event) => {
 		// Pressed enter, but not shift-enter
 		if (event.keyCode === 13 && !event.shiftKey) {
+			event.preventDefault();
 			submit_prompt();
 		}
 	});
@@ -58,9 +65,10 @@ function respond(params) {
 		annoyance,
 	} = params;
 	console.log('Qwalski:', params);
+	let common = COMMON_COMMANDS[randi(0, COMMON_COMMANDS.length)];
 	return {
-		text: 'I look around',
-		annoyance: 0,
+		text: common,
+		annoyance: annoyance - 0.5,
 	};
 }
 
@@ -68,4 +76,31 @@ function to_inner_html(text) {
 	return text.split(/\n+/g).map(p => `<p>${p}</p>`).join('');
 }
 
+// Exclusive integer range random
+function randi(raw_min, raw_max) {
+	let [min, max] = raw_max ? [raw_min || 0, raw_max] : [0, raw_min || 0];
+	return Math.floor(Math.random() * (max - min)) + min;
+}
+
+const COMMON_COMMANDS = [
+	'look around',
+	'go north',
+	'go east',
+	'go south',
+	'go west',
+	'go up',
+	'go down',
+	'enter it',
+	'open it',
+	'close it',
+	'inspect it',
+	'turn left',
+	'turn right',
+	'look up',
+	'look down',
+];
+
+// TODO: Have frustrated command sequences? like 'Just tell me what to do, please!' -> '...' -> 'Okay, I do that'
+
 // TODO: Idea - Achievements, like getting the bot really angry or awarding a game over or awarding a game win
+// TODO: Idea - Some sort of minimum delay for the computer to 'process' the entry and spit out something reasonable in response since it is too fast right now to feel good
