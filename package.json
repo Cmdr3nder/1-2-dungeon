@@ -5,7 +5,9 @@
   "main": "index.html",
   "scripts": {
     "build": "esbuild src/index.js --bundle --outfile=out/index.js && cp src/index.html out/index.html",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "serve": "npx live-server --mount=/:out/",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "find src -type f | entr npm run build"
   },
   "keywords": [
     "game",
@@ -15,7 +17,8 @@
   "author": "Cloud Puppy Games (Andrew & Anna Bowers)",
   "license": "GPL v3",
   "devDependencies": {
-    "esbuild": "0.18.11"
+    "esbuild": "0.18.11",
+    "live-server": "1.2.2"
   },
   "dependencies": {
     "compromise": "14.9.0",
