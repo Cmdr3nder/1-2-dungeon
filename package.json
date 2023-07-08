@@ -1,0 +1,24 @@
+{
+  "name": "gmtk-2023-1-2-dungeon",
+  "version": "1.0.0",
+  "description": "1-2 Dungeon is a game made for the GMTK 2023 - Role Reversal game jam",
+  "main": "index.html",
+  "scripts": {
+    "build": "esbuild src/index.js --bundle --outfile=out/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "game",
+    "markov",
+    "nlp"
+  ],
+  "author": "Cloud Puppy Games (Andrew & Anna Bowers)",
+  "license": "GPL v3",
+  "devDependencies": {
+    "esbuild": "0.18.11"
+  },
+  "dependencies": {
+    "compromise": "14.9.0",
+    "markov-chains": "1.0.2"
+  }
+}
