@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			   prompt_editor.value = reuse.getAttribute('data-prompt'); 
 		   });
 		   conversation_zone.appendChild(user_entry);
+		   conversation_zone.querySelector('.entry-container:last-child').scrollIntoView();
 
 			const analysis = compendium.analyse(prompt_text);
 			const response = respond({prompt_text, analysis, conversation_window, annoyance});
@@ -34,6 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		   const bot_entry = bot_entry_template.content.cloneNode(true);
 			bot_entry.querySelector('.text').innerHTML = to_inner_html(response.text);
 		   conversation_zone.appendChild(bot_entry);
+		   conversation_zone.querySelector('.entry-container:last-child').scrollIntoView();
 
 			prompt_editor.value = ''; // Clear
 			conversation_window.push({prompt_text, analysis, response});

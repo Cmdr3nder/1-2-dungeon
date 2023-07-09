@@ -22,18 +22,21 @@ html, body {
 	margin: 0 auto;
 	max-width: 80ch + 2ch;
 	height: 100%;
-	display: flex;
-	flex-direction: column;
-	justify-content: flex-end;
 }
 
 #conversation {
-	flex: 1 0 min-content;
-	display: flex;
-	flex-direction: column;
-	justify-content: flex-end;
-	margin-bottom: 1ch;
+	height: 80%;
 	overflow-y: auto;
+}
+
+.user-entry-container,
+.bot-entry-container {
+	width: 100%;
+	display: flex;
+}
+
+.user-entry-container {
+	justify-content: flex-end;
 }
 
 .user-entry,
@@ -46,13 +49,13 @@ html, body {
 }
 
 .user-entry {
-	align-self: flex-end;
 	border: 2px solid var(--user-color);
+	justify-self: flex-end;
 }
 
 .bot-entry {
-	align-self: flex-start;
 	border: 2px solid var(--bot-color);
+	justify-self: flex-start;
 }
 
 #prompt-submit {
