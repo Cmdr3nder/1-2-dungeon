@@ -4,7 +4,7 @@
   "description": "YOU are the game master! Shepherd the cpu player through an adventure of your own design.",
   "main": "out/index.html",
   "scripts": {
-    "build": "esbuild src/index.js --bundle --outfile=out/index.js && npx sass --no-source-map src/index.scss out/index.css && cp src/index.html out/index.html",
+    "build": "esbuild src/index.js --bundle --outfile=out/index.js && npx sass --no-source-map src/index.scss out/index.css && cp src/index.html out/index.html && cp -R src/assets out/assets",
     "release": "npm run build && cd out && 7z a -tzip \"../upstart-dungeon.$(date +%Y%m%d%H%M%S).zip\" && cd -",
     "serve": "cd out && npx live-server",
     "test": "echo \"Error: no test specified\" && exit 1",

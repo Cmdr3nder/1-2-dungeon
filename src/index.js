@@ -46,7 +46,6 @@ document.addEventListener('DOMContentLoaded', () => {
 		prompt_editor.removeAttribute('disabled');
 		prompt_submit.removeAttribute('disabled');
 		prompt_editor.focus();
-		// TODO: Let the user click on any conversation blurb, and copy the text to the editor automatically
 	};
 
 	prompt_editor.addEventListener('keyup', (event) => {
