@@ -2,6 +2,7 @@ import compendium from 'compendium-js';
 
 const MAX_CONV_WINDOW = 5;
 const MIN_ANNOYANCE = -10;
+const MAX_ANNOYANCE = 10;
 
 document.addEventListener('DOMContentLoaded', () => {
 	const conversation_window = [];
@@ -11,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	const user_entry_template = document.querySelector('#conversation-user-entry'); 
 	const bot_entry_template = document.querySelector('#conversation-bot-entry'); 
 	const conversation_zone = document.querySelector('#conversation');
+	const bot_status_img = document.querySelector('#bot-status > img');
 
 	const submit_prompt = () => {
 		prompt_editor.setAttribute('disabled', '');
@@ -30,7 +32,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 			const analysis = compendium.analyse(prompt_text);
 			const response = respond({prompt_text, analysis, conversation_window, annoyance});
-		   annoyance = Math.max(response.annoyance, MIN_ANNOYANCE);
+		   annoyance = Math.min(Math.max(response.annoyance, MIN_ANNOYANCE), MAX_ANNOYANCE);
+		   update_bot_status(annoyance, bot_status_img);
 
 		   const bot_entry = bot_entry_template.content.cloneNode(true);
 			bot_entry.querySelector('.text').innerHTML = to_inner_html(response.text);
@@ -58,6 +61,10 @@ document.addEventListener('DOMContentLoaded', () => {
 	prompt_submit.addEventListener('click', () => submit_prompt());
 });
 
+const analysis_refusal = (analysis) => analysis.findIndex(s => s.profile.types.indexOf('refusal') !== -1) !== -1;
+const prompt_refusal = (text) => / no | not | cannot | can't | won't /gi.test(text);
+const word_count = (analysis) => analysis.reduce((sum, s) => s.length + sum, 0);
+
 function respond(params) {
 	const {
 		prompt_text,
@@ -65,7 +72,24 @@ function respond(params) {
 		conversation_window,
 		annoyance,
 	} = params;
-	console.log('Qwalski:', params);
+	if (analysis_refusal(analysis) || prompt_refusal(prompt_text)) {
+		let common = COMMON_COMMANDS[randi(0, COMMON_COMMANDS.length)];
+		while (common === conversation_window[conversation_window.length - 1]?.response) {
+			common = COMMON_COMMANDS[randi(0, COMMON_COMMANDS.length)];
+		}
+		return {
+			text: common,
+			annoyance: annoyance + 2,
+		};
+	}
+	const wc = word_count(analysis);
+	if (wc < 4 || wc > 120) {
+		let common = COMMON_COMMANDS[randi(0, COMMON_COMMANDS.length)];
+		return {
+			text: common,
+			annoyance: annoyance + 0.5,
+		};
+	}
 	let common = COMMON_COMMANDS[randi(0, COMMON_COMMANDS.length)];
 	return {
 		text: common,
@@ -100,6 +124,48 @@ const COMMON_COMMANDS = [
 	'look up',
 	'look down',
 ];
+
+function update_bot_status(annoyance, img) {
+	console.log('annoyance', annoyance);
+	switch (true) {
+		case annoyance > 9:
+			img.setAttribute('src', './assets/Linus7.svg');
+			break;
+		case annoyance > 7:
+			img.setAttribute('src', './assets/Linus6.svg');
+			break;
+		case annoyance > 6:
+			img.setAttribute('src', './assets/Linus5.svg');
+			break;
+		case annoyance > 5:
+			img.setAttribute('src', './assets/Linus4.svg');
+			break;
+		case annoyance > 3:
+			img.setAttribute('src', './assets/Linus3.svg');
+			break;
+		case annoyance > 1:
+			img.setAttribute('src', './assets/Linus2.svg');
+			break;
+		case annoyance < -9:
+			img.setAttribute('src', './assets/Linus12.svg');
+			break;
+		case annoyance < -7:
+			img.setAttribute('src', './assets/Linus11.svg');
+			break;
+		case annoyance < -5:
+			img.setAttribute('src', './assets/Linus10.svg');
+			break;
+		case annoyance < -3:
+			img.setAttribute('src', './assets/Linus9.svg');
+			break;
+		case annoyance < -1:
+			img.setAttribute('src', './assets/Linus8.svg');
+			break;
+		default:
+			img.setAttribute('src', './assets/Linus1.svg');
+			break;
+	}
+}
 
 // TODO: Have frustrated command sequences? like 'Just tell me what to do, please!' -> '...' -> 'Okay, I do that'
 
