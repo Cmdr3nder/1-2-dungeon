@@ -72,29 +72,29 @@ function respond(params) {
 		conversation_window,
 		annoyance,
 	} = params;
+	let forbidden = [];
+	let factor = -0.5;
 	if (analysis_refusal(analysis) || prompt_refusal(prompt_text)) {
-		let common = COMMON_COMMANDS[randi(0, COMMON_COMMANDS.length)];
-		while (common === conversation_window[conversation_window.length - 1]?.response) {
-			common = COMMON_COMMANDS[randi(0, COMMON_COMMANDS.length)];
+		factor = 2;
+		forbidden = conversation_window.map(c => c.response.text);
+	} else {
+		const wc = word_count(analysis);
+		if (wc < 4 || wc > 120) {
+			factor = 0.5;
+		} else if (wc >= 12 && wc <= 48) {
+			factor = -1;
 		}
-		return {
-			text: common,
-			annoyance: annoyance + 2,
-		};
-	}
-	const wc = word_count(analysis);
-	if (wc < 4 || wc > 120) {
-		let common = COMMON_COMMANDS[randi(0, COMMON_COMMANDS.length)];
-		return {
-			text: common,
-			annoyance: annoyance + 0.5,
-		};
 	}
 	let common = COMMON_COMMANDS[randi(0, COMMON_COMMANDS.length)];
+	while (forbidden.indexOf(common) !== -1) {
+		common = COMMON_COMMANDS[randi(0, COMMON_COMMANDS.length)];
+	}
 	return {
 		text: common,
-		annoyance: annoyance - 0.5,
+		annoyance: annoyance + factor,
+		factor,
 	};
+	// TODO: Add factor for recently reused prompts.
 }
 
 function to_inner_html(text) {
