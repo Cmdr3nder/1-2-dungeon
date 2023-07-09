@@ -13,6 +13,11 @@ document.addEventListener('DOMContentLoaded', () => {
 	const bot_entry_template = document.querySelector('#conversation-bot-entry'); 
 	const conversation_zone = document.querySelector('#conversation');
 	const bot_status_img = document.querySelector('#bot-status > img');
+	const scroll_behavior = {
+		behavior: 'smooth',
+		block: 'center',
+		inline: 'center',
+	};
 
 	const submit_prompt = () => {
 		prompt_editor.setAttribute('disabled', '');
@@ -28,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			   prompt_editor.value = reuse.getAttribute('data-prompt'); 
 		   });
 		   conversation_zone.appendChild(user_entry);
-		   conversation_zone.querySelector('.entry-container:last-child').scrollIntoView();
+		   conversation_zone.querySelector('.entry-container:last-child').scrollIntoView(scroll_behavior);
 
 			const analysis = compendium.analyse(prompt_text);
 			const response = respond({prompt_text, analysis, conversation_window, annoyance});
@@ -38,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		   const bot_entry = bot_entry_template.content.cloneNode(true);
 			bot_entry.querySelector('.text').innerHTML = to_inner_html(response.text);
 		   conversation_zone.appendChild(bot_entry);
-		   conversation_zone.querySelector('.entry-container:last-child').scrollIntoView();
+		   conversation_zone.querySelector('.entry-container:last-child').scrollIntoView(scroll_behavior);
 
 			prompt_editor.value = ''; // Clear
 			conversation_window.push({prompt_text, analysis, response});
